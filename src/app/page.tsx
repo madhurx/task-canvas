@@ -1,7 +1,11 @@
-import Image from "next/image";
+import MaxWidthWrapper from '@/component/MaxWidthWrapper';
 
 export default function Home() {
-  return (
-    <div></div>
-  );
+    return (
+        <MaxWidthWrapper>
+            <div className="font-light"></div>
+        </MaxWidthWrapper>
+    );
 }
+
+// https://app.uizard.io/templates/XXJOvmKW0jhEyYZdmA7w/fullscreen
