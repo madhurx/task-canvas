@@ -4,7 +4,16 @@ import { NextResponse } from 'next/server';
 
 connectDB();
 
-export async function GET(request: Request, { params }: { params: any }) {
+export async function GET(
+    request: Request,
+    {
+        params,
+    }: {
+        params: {
+            userId: string;
+        };
+    },
+) {
     const { userId } = params;
     try {
         const user = await User.findById(userId);
@@ -38,7 +47,16 @@ export async function GET(request: Request, { params }: { params: any }) {
     }
 }
 
-export async function DELETE(request: Request, { params }: { params: any }) {
+export async function DELETE(
+    request: Request,
+    {
+        params,
+    }: {
+        params: {
+            userId: string;
+        };
+    },
+) {
     const { userId } = params;
     try {
         await User.deleteOne({
@@ -65,7 +83,16 @@ export async function DELETE(request: Request, { params }: { params: any }) {
     }
 }
 
-export async function PUT(request: Request, { params }: { params: any }) {
+export async function PUT(
+    request: Request,
+    {
+        params,
+    }: {
+        params: {
+            userId: string;
+        };
+    },
+) {
     const { userId } = params;
     const { name, email, password, userPfp } = await request.json();
 
