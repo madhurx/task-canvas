@@ -7,7 +7,7 @@ connectDB();
 export async function GET(request: Request, { params }: { params: any }) {
     const { userId } = params;
     try {
-        const user = await User.findById({ _id: userId });
+        const user = await User.findById(userId);
         if (!user) {
             return NextResponse.json(
                 {
@@ -70,7 +70,7 @@ export async function PUT(request: Request, { params }: { params: any }) {
     const { name, email, password, userPfp } = await request.json();
 
     try {
-        const user = await User.findById({ _id: userId });
+        const user = await User.findById(userId);
         if (!user) {
             return NextResponse.json(
                 {
