@@ -10,8 +10,9 @@ export async function GET() {
         users = await User.find().select('-password').select('-__v');
         return NextResponse.json(
             {
-                users,
                 success: true,
+                message: 'Users retrieved successfully',
+                users,
             },
             {
                 status: 200,
@@ -34,7 +35,14 @@ export async function POST(request: Request) {
         const { name, email, password, userPfp } = await request.json();
         const user = new User({ name, email, password, userPfp });
         await user.save();
-        return NextResponse.json(user, { status: 201 });
+        return NextResponse.json(
+            {
+                success: true,
+                message: 'User created successfully',
+                user,
+            },
+            { status: 201 },
+        );
     } catch (error: any) {
         return NextResponse.json(
             {

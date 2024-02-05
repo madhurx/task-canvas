@@ -17,7 +17,14 @@ export async function GET(request: Request, { params }: { params: any }) {
                 { status: 404 },
             );
         } else {
-            return NextResponse.json({ user }, { status: 200 });
+            return NextResponse.json(
+                {
+                    success: true,
+                    message: `User with id ${userId} retrieved successfully`,
+                    user,
+                },
+                { status: 200 },
+            );
         }
     } catch (error: any) {
         return NextResponse.json(
@@ -85,6 +92,7 @@ export async function PUT(request: Request, { params }: { params: any }) {
                 {
                     success: true,
                     message: `User with id ${userId} updated successfully`,
+                    user,
                 },
                 { status: 200 },
             );
