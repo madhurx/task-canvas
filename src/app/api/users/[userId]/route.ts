@@ -1,4 +1,5 @@
 import { connectDB } from '@/helper/db';
+import { getErrorResponseMessage } from '@/helper/errorResponseMessage';
 import { User } from '@/models/user';
 import { NextResponse } from 'next/server';
 
@@ -36,14 +37,7 @@ export async function GET(
             );
         }
     } catch (error: any) {
-        return NextResponse.json(
-            {
-                message: error.message || 'An unexpected error occurred',
-            },
-            {
-                status: 500,
-            },
-        );
+        return getErrorResponseMessage(false, 'User not fetched!', 500, error);
     }
 }
 
@@ -65,7 +59,7 @@ export async function DELETE(
         return NextResponse.json(
             {
                 success: true,
-                message: `User with id ${userId} deleted successfully`,
+                message: `User deleted successfully`,
                 data: null,
             },
             {
@@ -73,14 +67,7 @@ export async function DELETE(
             },
         );
     } catch (error: any) {
-        return NextResponse.json(
-            {
-                message: error.message || 'An unexpected error occurred',
-            },
-            {
-                status: 500,
-            },
-        );
+        return getErrorResponseMessage(false, 'User not deleted!', 500, error);
     }
 }
 
@@ -119,20 +106,13 @@ export async function PUT(
             return NextResponse.json(
                 {
                     success: true,
-                    message: `User with id ${userId} updated successfully`,
+                    message: `User updated successfully`,
                     data: user,
                 },
                 { status: 200 },
             );
         }
     } catch (error: any) {
-        return NextResponse.json(
-            {
-                message: error.message || 'An unexpected error occurred',
-            },
-            {
-                status: 500,
-            },
-        );
+        return getErrorResponseMessage(false, 'User not updated!', 500, error);
     }
 }

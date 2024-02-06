@@ -1,5 +1,6 @@
 import { connectDB } from '@/helper/db';
-import { TypeUser, User } from '@/models/user';
+import { getErrorResponseMessage } from '@/helper/errorResponseMessage';
+import { User } from '@/models/user';
 import { NextResponse } from 'next/server';
 
 connectDB();
@@ -19,14 +20,7 @@ export async function GET() {
             },
         );
     } catch (error: any) {
-        return NextResponse.json(
-            {
-                message: error.message || 'An unexpected error occurred',
-            },
-            {
-                status: 500,
-            },
-        );
+        return getErrorResponseMessage(false, 'Users not fetched!', 500, error);
     }
 }
 
@@ -44,11 +38,6 @@ export async function POST(request: Request) {
             { status: 201 },
         );
     } catch (error: any) {
-        return NextResponse.json(
-            {
-                message: error.message || 'An unexpected error occurred',
-            },
-            { status: 500 },
-        );
+        return getErrorResponseMessage(false, 'User not saved!', 500, error);
     }
 }
