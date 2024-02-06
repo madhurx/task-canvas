@@ -12,7 +12,7 @@ export async function GET() {
             {
                 success: true,
                 message: 'Users retrieved successfully',
-                users,
+                data: users,
             },
             {
                 status: 200,
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
             {
                 success: true,
                 message: 'User created successfully',
-                user,
+                data: user,
             },
             { status: 201 },
         );

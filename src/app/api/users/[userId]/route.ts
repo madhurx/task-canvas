@@ -30,7 +30,7 @@ export async function GET(
                 {
                     success: true,
                     message: `User with id ${userId} retrieved successfully`,
-                    user,
+                    data: user,
                 },
                 { status: 200 },
             );
@@ -66,6 +66,7 @@ export async function DELETE(
             {
                 success: true,
                 message: `User with id ${userId} deleted successfully`,
+                data: null,
             },
             {
                 status: 200,
@@ -119,7 +120,7 @@ export async function PUT(
                 {
                     success: true,
                     message: `User with id ${userId} updated successfully`,
-                    user,
+                    data: user,
                 },
                 { status: 200 },
             );
