@@ -5,7 +5,10 @@ import { NextResponse } from 'next/server';
 
 connectDB();
 
-export const GET = async (request: Request, { params }: { params: any }) => {
+export const GET = async (
+    request: Request,
+    { params }: { params: { taskId: string } },
+) => {
     try {
         const { taskId } = params;
         const task = await Task.findById(taskId);
@@ -24,15 +27,10 @@ export const GET = async (request: Request, { params }: { params: any }) => {
     }
 };
 
-export const POST = async (request: Request, { params }: { params: any }) => {
-    try {
-        const { taskId } = params;
-    } catch (error: any) {
-        return getErrorResponseMessage(false, 'Task!', 500, error);
-    }
-};
-
-export const DELETE = async (request: Request, { params }: { params: any }) => {
+export const DELETE = async (
+    request: Request,
+    { params }: { params: { taskId: string } },
+) => {
     try {
         const { taskId } = params;
         await Task.findByIdAndDelete(taskId);
@@ -51,7 +49,10 @@ export const DELETE = async (request: Request, { params }: { params: any }) => {
     }
 };
 
-export const PUT = async (request: Request, { params }: { params: any }) => {
+export const PUT = async (
+    request: Request,
+    { params }: { params: { taskId: string } },
+) => {
     try {
         const { taskId } = params;
         const { title, content, status } = await request.json();
