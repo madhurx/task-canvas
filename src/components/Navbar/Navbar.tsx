@@ -1,15 +1,7 @@
-'use client';
-
 import MaxWidthWrapper from '../MaxWidthWrapper';
-import { useState } from 'react';
+import { ModeToggle } from '../ToggleMode';
 
 const Navbar = () => {
-    const [isDarkMode, setIsDarkMode] = useState(false);
-
-    const handleClick = () => {
-        setIsDarkMode((previousValue) => !previousValue);
-    };
-
     return (
         <div className="sticky z-50 top-0 inset-x-0 h-16">
             <div className="relative">
@@ -21,7 +13,7 @@ const Navbar = () => {
                                 NavItem
                             </div>
                             <div className="ml-auto items-center flex ">
-                                User
+                                <ModeToggle />
                             </div>
                         </div>
                     </div>

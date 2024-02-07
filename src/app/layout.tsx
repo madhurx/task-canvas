@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import './globals.css';
-import Navbar from '@/component/Navbar/Navbar';
 import { cn } from '@/lib/utils';
+import { ThemeProvider } from '@/components/theme-provider';
+import Navbar from '@/components/Navbar/Navbar';
 
 export const roboto = Roboto({
     subsets: ['latin'],
@@ -23,15 +24,22 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body
                 className={cn(
-                    'min-h-screen bg-background font-sans antialiased',
+                    'min-h-screen bg-background antialiased',
                     roboto.className,
                 )}
             >
-                <Navbar />
-                {children}
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <Navbar />
+                    {children}
+                </ThemeProvider>
             </body>
         </html>
     );
