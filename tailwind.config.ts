@@ -1,5 +1,6 @@
+import { roboto } from '@/app/layout';
 import type { Config } from 'tailwindcss';
-const { fontFamily } = require('tailwindcss/defaultTheme');
+import { fontFamily } from 'tailwindcss/defaultTheme';
 
 const config = {
     darkMode: ['class'],
@@ -18,10 +19,10 @@ const config = {
                 '2xl': '1400px',
             },
         },
+        fontFamily: {
+            roboto: ['Roboto', 'sans-serif'],
+        },
         extend: {
-            fontFamily: {
-                sans: ['var(--font-roboto)', ...fontFamily.roboto],
-            },
             colors: {
                 border: 'hsl(var(--border))',
                 input: 'hsl(var(--input))',
