@@ -3,7 +3,8 @@ import { Roboto } from 'next/font/google';
 import './globals.css';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/theme-provider';
-import Navbar from '@/components/Navbar/Navbar';
+import NavBar from '@/components/NavBar/NavBar';
+import Footer from '@/components/Footer/Footer';
 
 export const roboto = Roboto({
     subsets: ['latin'],
@@ -37,8 +38,9 @@ export default function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <Navbar />
-                    {children}
+                    <NavBar />
+                    <div className="py-2">{children}</div>
+                    <Footer />
                 </ThemeProvider>
             </body>
         </html>

@@ -1,5 +1,8 @@
 import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 
+export const metadata = {
+    title: 'Home: TaskCanvas',
+};
 export default function Home() {
     return (
         <MaxWidthWrapper>
