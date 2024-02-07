@@ -3,7 +3,7 @@ import MaxWidthWrapper from '@/component/MaxWidthWrapper';
 export default function Home() {
     return (
         <MaxWidthWrapper>
-            <div className="font-light"></div>
+            <div className="font-light">asd</div>
         </MaxWidthWrapper>
     );
 }
