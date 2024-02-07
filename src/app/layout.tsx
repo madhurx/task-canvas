@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/component/Navbar/Navbar';
+import { cn } from '@/lib/utils';
 
-const roboto = Roboto({
+export const roboto = Roboto({
     subsets: ['latin'],
     weight: ['100', '300', '400', '500', '700', '900'],
     variable: '--font-roboto',
@@ -12,7 +13,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-    title: 'TaskCanvas App',
+    title: 'TaskCanvas',
     description: 'Task dashboard app',
 };
 
@@ -23,7 +24,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={roboto.className}>
+            <body
+                className={cn(
+                    'min-h-screen bg-background font-sans antialiased',
+                    roboto.className,
+                )}
+            >
                 <Navbar />
                 {children}
             </body>
