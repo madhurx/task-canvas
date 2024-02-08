@@ -36,8 +36,8 @@ export function NavMenu() {
 
                             <Link href={'/all-tasks'} legacyBehavior passHref>
                                 <NavigationMenuLink>
-                                    <ListItem title={'Your Tasks'}>
-                                        {'View your all tasks'}
+                                    <ListItem title={'My Tasks'}>
+                                        {'View all tasks'}
                                     </ListItem>
                                 </NavigationMenuLink>
                             </Link>
