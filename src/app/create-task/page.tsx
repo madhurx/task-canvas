@@ -1,5 +1,4 @@
 import MaxWidthWrapper from '@/components/MaxWidthWrapper';
-
 import CreateTask from '@/components/CreateTask';
 
 export const metadata = {
