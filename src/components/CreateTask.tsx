@@ -1,4 +1,5 @@
 'use client';
+
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Input } from '@/components/ui/input';
@@ -17,18 +18,44 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import {
-    CalendarIcon,
-    EraserIcon,
-    PlusCircleIcon,
-    XCircleIcon,
-} from 'lucide-react';
+import { CalendarIcon, EraserIcon, PlusCircleIcon } from 'lucide-react';
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
+import { TimePickerDemo } from './ui/time-picker-demo';
 
 const CreateTask = () => {
-    const [date, setDate] = useState();
+    // const [date, setDate] = useState();
+    const [task, setTask] = useState<{
+        title: string;
+        content: string;
+        status: string;
+        reminderDate: string;
+    }>({
+        title: '',
+        content: '',
+        status: '',
+        reminderDate: new Date(
+            new Date().setDate(new Date().getDate() + 7),
+        ).toLocaleString(),
+    });
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log(task);
+    };
+
+    const handleClear = () => {
+        setTask({
+            title: '',
+            content: '',
+            status: '',
+            reminderDate: new Date(
+                new Date().setDate(new Date().getDate() + 7),
+            ).toLocaleString(),
+        });
+    };
+
     return (
         <div className="flex flex-col w-full p-4 gap-4 dark:bg-neutral-950 bg-neutral-50 rounded-sm">
             <div className="mb-2">
@@ -36,13 +63,18 @@ const CreateTask = () => {
                     Create Task
                 </h3>
             </div>
-            <form action={'#'} className="w-full">
+            <form className="w-full" onSubmit={handleSubmit}>
                 <div className="grid w-full items-center gap-1.5 mb-6">
                     <Label htmlFor="title">Title</Label>
                     <Input
                         type="text"
                         id="title"
                         placeholder="Add task title"
+                        name="title"
+                        onChange={(e) => {
+                            setTask({ ...task, title: e.target.value });
+                        }}
+                        value={task.title}
                     />
                 </div>
 
@@ -52,13 +84,24 @@ const CreateTask = () => {
                         placeholder="Add task description"
                         id="content"
                         rows={5}
+                        name="content"
+                        onChange={(e) => {
+                            setTask({ ...task, content: e.target.value });
+                        }}
+                        value={task.content}
                     />
                 </div>
 
                 <div className="mb-6 flex flex-col gap-2">
                     <Label htmlFor="status">Task status</Label>
-                    <Select>
-                        <SelectTrigger className="w-[280px]" id="status">
+                    <Select
+                        name="status"
+                        onValueChange={(value) =>
+                            setTask({ ...task, status: value })
+                        }
+                        value={task.status}
+                    >
+                        <SelectTrigger className="w-[280px]">
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
                         <SelectContent>
@@ -76,19 +119,20 @@ const CreateTask = () => {
                 </div>
 
                 <div className="mb-6 flex flex-col gap-2">
-                    <Label htmlFor="emailDate">Remind me via email on</Label>
+                    <Label htmlFor="reminderDate">Remind me via email on</Label>
                     <Popover>
-                        <PopoverTrigger asChild>
+                        <PopoverTrigger asChild id="reminderDate">
                             <Button
                                 variant={'outline'}
                                 className={cn(
                                     'w-[280px] justify-start text-left font-normal',
-                                    !date && 'text-muted-foreground',
+                                    !task.reminderDate &&
+                                        'text-muted-foreground',
                                 )}
                             >
                                 <CalendarIcon className="mr-2 h-4 w-4" />
-                                {date ? (
-                                    format(date, 'PPP')
+                                {task.reminderDate ? (
+                                    format(task.reminderDate, 'PPP HH:mm:ss')
                                 ) : (
                                     <span>Pick a date</span>
                                 )}
@@ -97,24 +141,41 @@ const CreateTask = () => {
                         <PopoverContent className="w-auto p-0">
                             <Calendar
                                 mode="single"
-                                selected={date}
-                                onSelect={setDate}
+                                selected={task.reminderDate}
+                                onSelect={(date: any) =>
+                                    setTask({ ...task, reminderDate: date })
+                                }
                                 initialFocus
+                                disabled={(date: any) =>
+                                    date < new Date() ||
+                                    date > new Date('2025-01-01')
+                                }
                             />
+                            <div className="p-3 border-t border-border">
+                                <TimePickerDemo
+                                    setDate={(date: Date | undefined) => {
+                                        if (date) {
+                                            setTask({
+                                                ...task,
+                                                reminderDate:
+                                                    date.toLocaleString(),
+                                            });
+                                        }
+                                    }}
+                                    date={new Date(task.reminderDate)}
+                                />
+                            </div>
                         </PopoverContent>
                     </Popover>
                 </div>
 
                 <div className="flex justify-end gap-2">
-                    <Button variant="ghost">
+                    <Button variant="secondary" onClick={handleClear}>
                         <EraserIcon strokeWidth={3} className="mr-2 h-4 w-4" />
                         Clear
                     </Button>
-                    <Button variant="secondary">
-                        <XCircleIcon strokeWidth={3} className="mr-2 h-4 w-4" />
-                        Cancel
-                    </Button>
-                    <Button>
+
+                    <Button type="submit">
                         <PlusCircleIcon
                             strokeWidth={3}
                             className="mr-2 h-4 w-4"
