@@ -23,6 +23,7 @@ import { useState } from 'react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { TimePickerDemo } from './ui/time-picker-demo';
+import { addTask } from '@/service/taskService';
 
 const CreateTask = () => {
     // const [date, setDate] = useState();
@@ -31,6 +32,7 @@ const CreateTask = () => {
         content: string;
         status: string;
         reminderDate: string;
+        userId: string;
     }>({
         title: '',
         content: '',
@@ -38,11 +40,19 @@ const CreateTask = () => {
         reminderDate: new Date(
             new Date().setDate(new Date().getDate() + 7),
         ).toLocaleString(),
+        userId: '65c082e3701038cd558f0406',
     });
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(task);
+
+        try {
+            const result = await addTask(task);
+            console.log(result);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const handleClear = () => {
@@ -53,6 +63,7 @@ const CreateTask = () => {
             reminderDate: new Date(
                 new Date().setDate(new Date().getDate() + 7),
             ).toLocaleString(),
+            userId: '65c082e3701038cd558f0406',
         });
     };
 
@@ -141,7 +152,7 @@ const CreateTask = () => {
                         <PopoverContent className="w-auto p-0">
                             <Calendar
                                 mode="single"
-                                selected={task.reminderDate}
+                                selected={new Date(task.reminderDate)}
                                 onSelect={(date: any) =>
                                     setTask({ ...task, reminderDate: date })
                                 }
