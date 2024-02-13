@@ -22,7 +22,7 @@ import { CalendarIcon, EraserIcon, PlusCircleIcon } from 'lucide-react';
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
-import { TimePickerDemo } from './ui/time-picker-demo';
+import { TimePickerDemo } from '@/components/ui/time-picker-demo';
 import { addTask } from '@/service/taskService';
 import { toast } from 'react-toastify';
 

@@ -1,5 +1,5 @@
 import MaxWidthWrapper from '@/components/MaxWidthWrapper';
-import CreateTask from '@/components/CreateTask';
+import CreateTask from './CreateTask';
 
 export const metadata = {
     title: 'Create Task: TaskCanvas',
