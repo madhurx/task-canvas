@@ -24,6 +24,7 @@ import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { TimePickerDemo } from './ui/time-picker-demo';
 import { addTask } from '@/service/taskService';
+import { toast } from 'react-toastify';
 
 const CreateTask = () => {
     // const [date, setDate] = useState();
@@ -45,13 +46,17 @@ const CreateTask = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(task);
 
         try {
             const result = await addTask(task);
-            console.log(result);
-        } catch (error) {
-            console.log(error);
+            if (result.success === false) {
+                toast.error(result.message);
+                return;
+            }
+            toast.success(result.message);
+            handleClear();
+        } catch (error: any) {
+            toast.error('Something went wrong!');
         }
     };
 

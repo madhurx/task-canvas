@@ -9,8 +9,15 @@ interface TaskType {
 }
 
 export async function addTask(task: TaskType) {
-    const result = await httpAxios
-        .post('/api/tasks', task)
-        .then((response) => response.data);
-    return result;
+    try {
+        const result = await httpAxios
+            .post('/api/tasks', task)
+            .then((response) => response.data);
+        return result;
+    } catch (error) {
+        return {
+            success: false,
+            message: 'Task not saved!',
+        };
+    }
 }

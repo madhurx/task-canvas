@@ -10,7 +10,7 @@ export const getErrorResponseMessage = (
     return NextResponse.json(
         {
             success: successStatus,
-            message,
+            message: message,
         },
         {
             status: statusCode,
