@@ -6,7 +6,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import NavBar from '@/components/NavBar/NavBar';
 import Footer from '@/components/Footer/Footer';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer, Zoom } from 'react-toastify';
+import { Flip, ToastContainer } from 'react-toastify';
 
 export const roboto = Roboto({
     subsets: ['latin'],
@@ -42,7 +42,7 @@ export default function RootLayout({
                 >
                     <ToastContainer
                         position="bottom-right"
-                        autoClose={4500}
+                        autoClose={4000}
                         hideProgressBar={false}
                         newestOnTop={false}
                         closeOnClick
@@ -51,8 +51,10 @@ export default function RootLayout({
                         draggable
                         pauseOnHover
                         limit={2}
-                        transition={Zoom}
+                        transition={Flip}
                         theme="colored"
+                        progressClassName="ToastProgress"
+                        bodyClassName="ToastBody"
                     />
                     <NavBar />
                     <div className="py-2">{children}</div>

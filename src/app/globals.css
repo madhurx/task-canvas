@@ -57,3 +57,35 @@
         @apply bg-background text-foreground;
     }
 }
+
+.Toastify__toast--warning {
+    background: #ffee99 !important;
+    color: #462b28 !important;
+}
+.Toastify__toast--error {
+    background: #ebc9c5 !important;
+    color: #a03334 !important;
+}
+.Toastify__toast--success {
+    background: #dff3d6 !important;
+    color: #586f51 !important;
+}
+.Toastify__toast--info {
+    background: #cce9f5 !important;
+    color: #4a7b9f !important;
+}
+.Toastify__toast--default {
+    background: #bdbdbd !important;
+    color: #000000 !important;
+}
+.ToastBody {
+    font-size: 0.95rem !important;
+    font-weight: 700;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+.Toastify__close-button {
+    color: #555555 !important;
+}
+.ToastProgress {
+    background: #555555 !important;
+}
