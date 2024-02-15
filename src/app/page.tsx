@@ -6,7 +6,7 @@ export const metadata = {
 export default function Home() {
     return (
         <MaxWidthWrapper>
-            <div className="font-light">asd</div>
+            <div className="font-light">API AI</div>
         </MaxWidthWrapper>
     );
 }
