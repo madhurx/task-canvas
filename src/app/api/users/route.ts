@@ -26,14 +26,14 @@ export async function GET() {
 
 export async function POST(request: Request) {
     try {
-        const { name, email, password, userPfp } = await request.json();
-        const user = new User({ name, email, password, userPfp });
-        await user.save();
+        const { email, password } = await request.json();
+        const user = new User({ email, password });
+        const savedUser = await user.save();
         return NextResponse.json(
             {
                 success: true,
-                message: 'User created successfully',
-                data: user,
+                message: 'User created successfully!',
+                data: savedUser,
             },
             { status: 201 },
         );

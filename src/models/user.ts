@@ -15,7 +15,7 @@ const userSchema = new Schema<TypeUser>(
     {
         name: {
             type: String,
-            required: true,
+            required: false,
             minLength: [2, 'Name must have at least 2 characters'],
             maxLength: [30, 'Name can have at most 30 characters'],
         },
