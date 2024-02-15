@@ -12,10 +12,7 @@ const SignUp = () => {
     const [signUpData, setSignUpData] = useState<{
         email: string;
         password: string;
-    }>({
-        email: '',
-        password: '',
-    });
+    }>({ email: '', password: '' });
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -54,7 +51,7 @@ const SignUp = () => {
                         />
                     </div>
                     <h1 className="text-2xl font-semibold tracking-tight">
-                        Sign in to your account
+                        Sign up to get started
                     </h1>
                 </div>
                 <div className="grid gap-4">
