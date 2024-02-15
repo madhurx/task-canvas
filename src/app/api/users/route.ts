@@ -38,6 +38,11 @@ export async function POST(request: Request) {
             { status: 201 },
         );
     } catch (error: any) {
-        return getErrorResponseMessage(false, 'User not saved!', 500, error);
+        return getErrorResponseMessage(
+            false,
+            'Failed to create user!',
+            500,
+            error,
+        );
     }
 }

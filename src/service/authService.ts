@@ -5,11 +5,13 @@ interface signUpDataType {
     password: string;
 }
 
-export async function addUser(signUpData: signUpDataType) {
+export async function signUp(signUpData: signUpDataType) {
     try {
         const result = await httpAxios
             .post('/api/users', signUpData)
             .then((response) => response.data);
+
+        console.log(result);
         return result;
     } catch (error: any) {
         return {

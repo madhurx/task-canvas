@@ -3,7 +3,7 @@ import Logo from '@/Images/logo.png';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { addUser } from '@/service/authService';
+import { signUp } from '@/service/authService';
 import Image from 'next/image';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
@@ -21,10 +21,10 @@ const SignUp = () => {
         e.preventDefault();
         try {
             if (signUpData.email === '' || signUpData.password === '') {
-                toast.warn('Please fill in all fields');
+                toast.warn('Please fill in all fields!');
                 return;
             }
-            const result = await addUser(signUpData);
+            const result = await signUp(signUpData);
             if (result.success === false) {
                 toast.error(result.message);
                 return;
