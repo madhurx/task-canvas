@@ -13,19 +13,21 @@ const NavBar = () => {
                     <div className="border-b border-gray-300 dark:border-gray-700 hover:cursor-default">
                         <div className="h-16 flex items-center">
                             <div className="ml-0 mr-4 px-4">
-                                <Image
-                                    src={Logo}
-                                    alt="logo"
-                                    className="w-10"
-                                    priority
-                                />
+                                <Link href={'/'}>
+                                    <Image
+                                        src={Logo}
+                                        alt="logo"
+                                        className="w-10"
+                                        priority
+                                    />
+                                </Link>
                             </div>
                             <div className="ml-0">
                                 <p className="scroll-m-20 text-lg font-semibold tracking-tight">
-                                    <Link href={'/'}>DashBoard</Link>
+                                    <Link href={'/'}>Dashboard</Link>
                                 </p>
                             </div>
-                            <div className="lg:block lg:ml-8 lg: z-50">
+                            <div className="lg:block lg:ml-4 lg: z-50">
                                 <NavMenu />
                             </div>
                             <div className="ml-auto items-center flex ">
