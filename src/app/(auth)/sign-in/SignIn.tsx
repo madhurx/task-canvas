@@ -37,7 +37,7 @@ const SignIn = () => {
                                 <Input
                                     type="email"
                                     id="email"
-                                    placeholder="firstname@email.com"
+                                    placeholder="Email or Mobile number"
                                     name="email"
                                     value={signInData.email}
                                     onChange={(e) =>
@@ -53,7 +53,7 @@ const SignIn = () => {
                                 <Input
                                     type="password"
                                     id="password"
-                                    placeholder="Must have at least 6 characters"
+                                    placeholder="Your password"
                                     name="password"
                                     value={signInData.password}
                                     onChange={(e) =>

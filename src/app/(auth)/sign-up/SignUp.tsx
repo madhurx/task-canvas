@@ -62,7 +62,7 @@ const SignUp = () => {
                                 <Input
                                     type="email"
                                     id="email"
-                                    placeholder="firstname@email.com"
+                                    placeholder="Your Email"
                                     name="email"
                                     value={signUpData.email}
                                     onChange={(e) =>
@@ -78,7 +78,7 @@ const SignUp = () => {
                                 <Input
                                     type="password"
                                     id="password"
-                                    placeholder="Must have at least 6 characters"
+                                    placeholder="Create a password"
                                     name="password"
                                     value={signUpData.password}
                                     onChange={(e) =>
