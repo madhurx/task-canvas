@@ -6,12 +6,43 @@ import Logo from '@/Images/logo.png';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { toast } from 'react-toastify';
+import { signIn } from '@/service/authService';
+import { useRouter } from 'next/navigation';
 
 const SignIn = () => {
     const [signInData, setSignInData] = useState<{
         email: string;
         password: string;
     }>({ email: '', password: '' });
+
+    const router = useRouter();
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        try {
+            if (signInData.email === '' || signInData.password === '') {
+                toast.warn('Please fill in all fields!');
+                return;
+            }
+            const result = await signIn(signInData);
+            if (result.success === false) {
+                toast.error(result.message);
+                return;
+            }
+            toast.success(result.message);
+            router.push('/');
+        } catch (error: any) {
+            toast.error('Something went wrong!');
+        }
+    };
+
+    const handleClear = () => {
+        setSignInData({
+            email: '',
+            password: '',
+        });
+    };
 
     return (
         <div className="container flex flex-col relative items-center justify-center pt-12">
@@ -30,7 +61,7 @@ const SignIn = () => {
                     </h1>
                 </div>
                 <div className="grid gap-4">
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <div className="grid gap-2">
                             <div className="grid gap-1 py-1">
                                 <Label htmlFor="email">Email</Label>

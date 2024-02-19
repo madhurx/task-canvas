@@ -20,3 +20,18 @@ export async function signUp(signUpData: signUpDataType) {
         };
     }
 }
+
+export async function signIn(signInData: signUpDataType) {
+    try {
+        const result = await httpAxios
+            .post('/api/login', signInData)
+            .then((response) => response.data);
+        console.log(result);
+        return result;
+    } catch (error: any) {
+        return {
+            success: false,
+            message: 'Unable to login!',
+        };
+    }
+}
