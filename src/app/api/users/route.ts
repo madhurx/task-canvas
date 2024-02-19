@@ -2,6 +2,7 @@ import { connectDB } from '@/helper/db';
 import { getErrorResponseMessage } from '@/helper/errorResponseMessage';
 import { User } from '@/models/user';
 import { NextResponse } from 'next/server';
+import bcrypt from 'bcryptjs';
 
 connectDB();
 
@@ -27,7 +28,19 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const { email, password } = await request.json();
-        const user = new User({ email, password });
+        const salt = Number(process.env.BCRYPT_SALT) || null;
+        if (!salt) {
+            return NextResponse.json(
+                {
+                    success: false,
+                    message: 'Salt not found!',
+                },
+                { status: 500 },
+            );
+        }
+
+        const hashedPass = bcrypt.hashSync(password, salt);
+        const user = new User({ email, password: hashedPass });
         const savedUser = await user.save();
         return NextResponse.json(
             {
