@@ -37,13 +37,6 @@ const SignIn = () => {
         }
     };
 
-    const handleClear = () => {
-        setSignInData({
-            email: '',
-            password: '',
-        });
-    };
-
     return (
         <div className="container flex flex-col relative items-center justify-center pt-12">
             <div className="mx-auto flex flex-col justify-center sm:w-[350px] space-y-2">

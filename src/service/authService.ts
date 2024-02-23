@@ -26,7 +26,6 @@ export async function signIn(signInData: signUpDataType) {
             .then((response) => response.data);
         return result;
     } catch (error: any) {
-        console.log(error);
         return {
             success: false,
             message: error.response.data.message,
@@ -41,7 +40,20 @@ export async function isSignedIn() {
             .then((response) => response.data);
         return result;
     } catch (error: any) {
-        console.log(error);
+        return {
+            success: false,
+            message: error.response.data.message,
+        };
+    }
+}
+
+export async function signOut() {
+    try {
+        const result = await httpAxios
+            .post('/api/logout')
+            .then((response) => response.data);
+        return result;
+    } catch (error: any) {
         return {
             success: false,
             message: error.response.data.message,

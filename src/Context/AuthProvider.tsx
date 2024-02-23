@@ -15,7 +15,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const handleAuthDetails = async () => {
         try {
             const authDetails = await isSignedIn();
-            console.log(authDetails);
             if (authDetails.success) {
                 setUser(authDetails);
             } else {

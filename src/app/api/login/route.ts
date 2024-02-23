@@ -34,7 +34,7 @@ export async function POST(request: Request, response: Response) {
         const response = NextResponse.json(
             {
                 success: true,
-                message: 'User retrieved successfully',
+                message: 'User logged in successfully',
                 data: { email: user.email, password: user.password },
             },
             {
