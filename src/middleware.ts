@@ -6,8 +6,6 @@ import React from 'react';
 export function middleware(request: NextRequest) {
     const authToken = request.cookies.get('authToken')?.value;
 
-    const tokenData = jwtDecode(authToken as string);
-
     const notAccessibleLoginPath =
         request.nextUrl.pathname === '/sign-in' ||
         request.nextUrl.pathname === '/sign-up';

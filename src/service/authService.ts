@@ -33,3 +33,18 @@ export async function signIn(signInData: signUpDataType) {
         };
     }
 }
+
+export async function isSignedIn() {
+    try {
+        const result = await httpAxios
+            .get('/api/authDetails')
+            .then((response) => response.data);
+        return result;
+    } catch (error: any) {
+        console.log(error);
+        return {
+            success: false,
+            message: error.response.data.message,
+        };
+    }
+}

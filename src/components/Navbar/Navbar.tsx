@@ -8,33 +8,15 @@ import Image from 'next/image';
 import Logo from '@/Images/logo.png';
 import { useContext, useEffect, useState } from 'react';
 import { Button } from '../ui/button';
-import { jwtDecode } from 'jwt-decode';
+import AuthContext from '@/Context/AuthContext';
 // import { getCookie, getCookies } from 'cookies-next';
 
 const NavBar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    // const token = getCookies()
-    // console.log('token', token, 'token');
-
-    // useEffect(() => {
-    //     if (token) {
-    //         try {
-    //             const decodedToken = jwtDecode(token);
-    //             const currentTime = Date.now() / 1000;
-    //             if (decodedToken.exp && decodedToken.exp > currentTime) {
-    //                 setIsLoggedIn(true);
-    //             } else {
-    //                 setIsLoggedIn(false);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error decoding or verifying token:', error);
-    //             setIsLoggedIn(false);
-    //         }
-    //     } else {
-    //         setIsLoggedIn(false);
-    //     }
-    // }, []);
+    const user = useContext(AuthContext);
+    useEffect(() => {
+        user?.success ? setIsLoggedIn(true) : setIsLoggedIn(false);
+    }, [user]);
 
     return (
         <div className="sticky z-50 top-0 inset-x-0 h-16">

@@ -7,6 +7,7 @@ import NavBar from '@/components/NavBar/NavBar';
 import Footer from '@/components/Footer/Footer';
 import 'react-toastify/dist/ReactToastify.css';
 import { Flip, ToastContainer } from 'react-toastify';
+import AuthProvider from '@/Context/AuthProvider';
 
 export const roboto = Roboto({
     subsets: ['latin'],
@@ -34,31 +35,33 @@ export default function RootLayout({
                     roboto.className,
                 )}
             >
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    <ToastContainer
-                        position="bottom-right"
-                        autoClose={4000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                        limit={2}
-                        transition={Flip}
-                        theme="colored"
-                        progressClassName="ToastProgress"
-                        bodyClassName="ToastBody"
-                    />
-                    <NavBar />
-                    <div className="py-2">{children}</div>
-                </ThemeProvider>
+                <AuthProvider>
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        <ToastContainer
+                            position="bottom-right"
+                            autoClose={4000}
+                            hideProgressBar={false}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss
+                            draggable
+                            pauseOnHover
+                            limit={2}
+                            transition={Flip}
+                            theme="colored"
+                            progressClassName="ToastProgress"
+                            bodyClassName="ToastBody"
+                        />
+                        <NavBar />
+                        <div className="py-2">{children}</div>
+                    </ThemeProvider>
+                </AuthProvider>
             </body>
         </html>
     );
