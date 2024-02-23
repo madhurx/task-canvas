@@ -6,7 +6,7 @@ export const getErrorResponseMessage = (
     statusCode: number,
     error?: Error,
 ) => {
-    console.log(error?.message);
+    console.log(error);
     return NextResponse.json(
         {
             success: successStatus,

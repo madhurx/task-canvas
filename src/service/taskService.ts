@@ -14,10 +14,10 @@ export async function addTask(task: TaskType) {
             .post('/api/tasks', task)
             .then((response) => response.data);
         return result;
-    } catch (error) {
+    } catch (error: any) {
         return {
             success: false,
-            message: 'Task not saved!',
+            message: error.response.data.message,
         };
     }
 }

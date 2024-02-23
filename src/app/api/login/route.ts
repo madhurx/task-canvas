@@ -41,7 +41,7 @@ export async function POST(request: Request, response: Response) {
                 status: 200,
             },
         );
-        response.cookies.set('loginToken', token, {
+        response.cookies.set('authToken', token, {
             httpOnly: true,
             expires: new Date(Date.now() + 60 * 60 * 24 * 1000),
         });

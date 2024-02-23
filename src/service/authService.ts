@@ -10,13 +10,11 @@ export async function signUp(signUpData: signUpDataType) {
         const result = await httpAxios
             .post('/api/users', signUpData)
             .then((response) => response.data);
-
-        console.log(result);
         return result;
     } catch (error: any) {
         return {
             success: false,
-            message: 'Unable to register!',
+            message: error.response.data.message,
         };
     }
 }
@@ -26,12 +24,12 @@ export async function signIn(signInData: signUpDataType) {
         const result = await httpAxios
             .post('/api/login', signInData)
             .then((response) => response.data);
-        console.log(result);
         return result;
     } catch (error: any) {
+        console.log(error);
         return {
             success: false,
-            message: 'Unable to login!',
+            message: error.response.data.message,
         };
     }
 }
