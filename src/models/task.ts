@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-const statusEnum = ['Pending', 'In Progress', 'Completed'];
+const statusEnum = ['pending', 'in-progress', 'completed'];
 
 export interface TypeTask extends Document {
     title: string;

@@ -11,9 +11,12 @@ export const GET = async (
 ) => {
     try {
         const { userId } = params;
-        const tasks = await Task.find({
-            userId: userId,
-        });
+        const tasks = await Task.find(
+            {
+                userId: userId,
+            },
+            { userId: 0, __v: 0, updatedAt: 0 },
+        );
         return NextResponse.json(
             {
                 success: true,

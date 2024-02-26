@@ -1,11 +1,11 @@
 import { httpAxios } from '@/helper/httpHelper';
 
 interface TaskType {
-    title: String;
-    content: String;
-    status: String;
-    reminderDate: String;
-    userId: String;
+    title: string;
+    content: string;
+    status: string;
+    reminderDate: Date;
+    userId: string;
 }
 
 export async function addTask(task: TaskType) {
@@ -19,5 +19,16 @@ export async function addTask(task: TaskType) {
             success: false,
             message: error.response.data.message,
         };
+    }
+}
+
+export async function getUserTasks(userId: string) {
+    try {
+        const result = await httpAxios
+            .get(`/api/users/${userId}/tasks`)
+            .then((response) => response.data);
+        return result;
+    } catch (error: any) {
+        return { success: false, message: error.response.data.message };
     }
 }

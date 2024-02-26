@@ -1,6 +1,8 @@
 import { connectDB } from '@/helper/db';
 import { getErrorResponseMessage } from '@/helper/errorResponseMessage';
 import { Task } from '@/models/task';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 connectDB();
@@ -15,14 +17,24 @@ export const GET = async () => {
             data: tasks,
         });
     } catch (error: any) {
-        return getErrorResponseMessage(false, 'Task not fetched!', 500, error);
+        return getErrorResponseMessage(false, 'Tasks not fetched!', 500, error);
     }
 };
 
 export const POST = async (request: Request) => {
     try {
-        const { title, content, userId } = await request.json();
-        const task = new Task({ title, content, userId });
+        const authToken = cookies().get('authToken')?.value;
+        const tokenDetails: string | JwtPayload = jwt.verify(
+            authToken as string,
+            process.env.JWT_KEY as string,
+        );
+
+        const { title, content } = await request.json();
+        const task = new Task({
+            title,
+            content,
+            userId: (tokenDetails as JwtPayload)._id,
+        });
         const savedTask = await task.save();
         return NextResponse.json(
             {
