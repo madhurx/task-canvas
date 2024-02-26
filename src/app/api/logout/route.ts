@@ -14,7 +14,7 @@ export async function POST(request: Request) {
         return NextResponse.json(
             {
                 success: true,
-                message: 'User logged out successfully',
+                message: 'Logged out successfully',
                 data: null,
             },
             {
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     } catch (error: any) {
         return getErrorResponseMessage(
             false,
-            'User not logged out',
+            'Error in logging out',
             500,
             error,
         );

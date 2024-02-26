@@ -13,7 +13,7 @@ export function middleware(request: NextRequest) {
     if (notAccessibleLoginPath) {
         //accessing authPages if logged in
         if (authToken) {
-            return NextResponse.redirect(new URL('/profile', request.url));
+            return NextResponse.redirect(new URL('/', request.url));
         }
     } else {
         //accessing normal pages if not logged in

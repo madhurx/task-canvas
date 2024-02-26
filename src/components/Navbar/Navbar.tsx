@@ -11,11 +11,14 @@ import { Button } from '../ui/button';
 import AuthContext from '@/Context/AuthContext';
 import { signOut } from '@/service/authService';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/navigation';
 // import { getCookie, getCookies } from 'cookies-next';
 
 const NavBar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const user = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
+    const router = useRouter();
+
     useEffect(() => {
         user?.success ? setIsLoggedIn(true) : setIsLoggedIn(false);
     }, [user]);
@@ -26,6 +29,7 @@ const NavBar = () => {
             if (result.success) {
                 setIsLoggedIn(false);
                 toast.success(result.message);
+                router.push('/');
             }
             if (!result.success) {
                 toast.error(result.message);
@@ -51,14 +55,20 @@ const NavBar = () => {
                                     />
                                 </Link>
                             </div>
-                            <div className="ml-0">
-                                <p className="scroll-m-20 text-lg font-semibold tracking-tight">
-                                    <Link href={'/'}>Dashboard</Link>
-                                </p>
-                            </div>
-                            <div className="lg:block lg:ml-4 lg: z-50">
-                                <NavMenu />
-                            </div>
+                            {isLoggedIn ? (
+                                <div className="">
+                                    <p className="scroll-m-20 text-lg font-semibold tracking-tight">
+                                        <Link href={'/'}>Dashboard</Link>
+                                    </p>
+                                </div>
+                            ) : null}
+
+                            {isLoggedIn ? (
+                                <div className="lg:block lg:ml-4 lg: z-50">
+                                    <NavMenu />
+                                </div>
+                            ) : null}
+
                             <div className="ml-auto flex flex-row justify-end">
                                 {!isLoggedIn ? (
                                     <div className="space-x-px flex flex-row items-center">

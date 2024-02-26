@@ -15,7 +15,7 @@ export async function POST(request: Request, response: Response) {
 
         const user = await User.findOne({ email });
         if (!user) {
-            return getErrorResponseMessage(false, 'Users not found!', 500);
+            return getErrorResponseMessage(false, 'User not found!', 500);
         }
 
         const isPasswordMatch = bcrypt.compareSync(password, user.password);
@@ -34,8 +34,8 @@ export async function POST(request: Request, response: Response) {
         const response = NextResponse.json(
             {
                 success: true,
-                message: 'User logged in successfully',
-                data: { email: user.email, password: user.password },
+                message: 'Logged in successfully',
+                data: user,
             },
             {
                 status: 200,
@@ -48,6 +48,6 @@ export async function POST(request: Request, response: Response) {
 
         return response;
     } catch (error: any) {
-        return getErrorResponseMessage(false, 'Users not found!', 500, error);
+        return getErrorResponseMessage(false, 'User not found!', 500, error);
     }
 }

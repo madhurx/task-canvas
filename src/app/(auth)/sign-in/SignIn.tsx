@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Logo from '@/Images/logo.png';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'react-toastify';
 import { signIn } from '@/service/authService';
 import { useRouter } from 'next/navigation';
+import AuthContext from '@/Context/AuthContext';
 
 const SignIn = () => {
     const [signInData, setSignInData] = useState<{
@@ -17,6 +18,9 @@ const SignIn = () => {
     }>({ email: '', password: '' });
 
     const router = useRouter();
+
+    const authContext = useContext(AuthContext);
+    // const { user, setUser } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -31,8 +35,10 @@ const SignIn = () => {
                 return;
             }
             toast.success(result.message);
+            authContext.setUser(result);
             router.push('/');
         } catch (error: any) {
+            console.log(error);
             toast.error('Something went wrong!');
         }
     };

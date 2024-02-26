@@ -16,7 +16,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         try {
             const authDetails = await isSignedIn();
             if (authDetails.success) {
-                setUser(authDetails);
+                setUser({ ...authDetails });
             } else {
                 setUser(null);
             }
@@ -29,7 +29,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         handleAuthDetails();
     }, []);
 
-    return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>;
+    return (
+        <AuthContext.Provider value={{ user, setUser }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
 
 export default AuthProvider;
