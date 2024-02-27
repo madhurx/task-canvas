@@ -25,13 +25,5 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-    matcher: [
-        '/',
-        '/sign-in',
-        '/sign-up',
-        '/profile',
-        '/tasks',
-        '/tasks/:path*',
-        '/create-task',
-    ],
+    matcher: ['/sign-in', '/sign-up', '/all-tasks', '/create-task'],
 };
