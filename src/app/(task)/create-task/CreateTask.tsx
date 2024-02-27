@@ -44,7 +44,6 @@ const CreateTask = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(task);
 
         try {
             const result = await addTask(task);

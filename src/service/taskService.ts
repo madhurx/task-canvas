@@ -32,3 +32,14 @@ export async function getUserTasks(userId: string) {
         return { success: false, message: error.response.data.message };
     }
 }
+
+export async function deleteUserTask(taskId: string) {
+    try {
+        const result = await httpAxios
+            .delete(`/api/tasks/${taskId}`)
+            .then((response) => response.data);
+        return result;
+    } catch (error: any) {
+        return { success: false, message: error.response.data.message };
+    }
+}

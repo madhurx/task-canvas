@@ -1,10 +1,11 @@
 'use client';
 
 import AuthContext from '@/Context/AuthContext';
-import { getUserTasks } from '@/service/taskService';
+import { deleteUserTask, getUserTasks } from '@/service/taskService';
 import { useContext, useEffect, useState } from 'react';
 import { DataTable } from './data-table';
 import { columns } from './columns';
+import { toast } from 'react-toastify';
 
 export type TypeTasksTable = {
     content: string;
@@ -17,24 +18,20 @@ export type TypeTasksTable = {
 
 const AllTasks = () => {
     const [task, setTask] = useState<TypeTasksTable[]>([]);
-    // const [task, setTask] = useState<any>('B');
     const context = useContext(AuthContext);
 
-    const loadTasks = async (userId: string) => {
-        try {
-            const tasks = await getUserTasks(userId);
-            setTask(tasks.data);
-            // setTask("asd")
-            console.log(tasks.data);
-            console.log(task);
-        } catch (error) {}
-    };
     useEffect(() => {
+        const loadTasks = async (userId: string) => {
+            try {
+                const tasks = await getUserTasks(userId);
+                setTask(tasks.data);
+            } catch (error) {}
+        };
+
         if (context.user) {
             loadTasks(context.user?.data?._id);
         }
-        // setTask('A');
-    }, [context.user]);
+    }, [context.user, task]);
 
     return (
         <div className="container mx-auto py-4">
@@ -51,3 +48,16 @@ const AllTasks = () => {
 };
 
 export default AllTasks;
+
+export async function deleteTask(taskId: string) {
+    try {
+        const result = await deleteUserTask(taskId);
+        if (result.success === false) {
+            toast.error(result.message);
+            return;
+        }
+        toast.success(result.message);
+    } catch (error: any) {
+        toast.error('Something went wrong!');
+    }
+}

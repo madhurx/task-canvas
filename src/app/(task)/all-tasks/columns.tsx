@@ -1,7 +1,7 @@
 'use client';
 
 import { ColumnDef } from '@tanstack/react-table';
-import { TypeTasksTable } from './AllTasks';
+import { TypeTasksTable, deleteTask } from './AllTasks';
 import moment from 'moment';
 import {
     DropdownMenu,
@@ -110,15 +110,28 @@ export const columns: ColumnDef<TypeTasksTable>[] = [
                         <DropdownMenuLabel>Actions</DropdownMenuLabel>
                         <DropdownMenuItem
                             onClick={() =>
-                                navigator.clipboard.writeText(actionOptions._id)
+                                navigator.clipboard.writeText(
+                                    actionOptions.title,
+                                )
                             }
                         >
-                            Copy payment ID
+                            Copy Title
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() =>
+                                navigator.clipboard.writeText(
+                                    actionOptions.content,
+                                )
+                            }
+                        >
+                            Copy Description
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
-                        <DropdownMenuItem>
-                            View payment details
+                        <DropdownMenuItem>Edit</DropdownMenuItem>
+                        <DropdownMenuItem
+                            onClick={() => deleteTask(actionOptions._id)}
+                        >
+                            Delete
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>

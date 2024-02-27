@@ -27,7 +27,6 @@ const taskSchema = new Schema<TypeTask>(
         status: {
             type: String,
             enum: statusEnum,
-            required: true,
             default: statusEnum[0],
         },
         reminderDate: {

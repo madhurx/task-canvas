@@ -33,7 +33,7 @@ export const POST = async (request: Request) => {
         const task = new Task({
             title,
             content,
-            status,
+            status: status === '' ? 'pending' : status,
             reminderDate,
             userId: (tokenDetails as JwtPayload)._id,
         });
