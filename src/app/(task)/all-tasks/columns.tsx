@@ -64,8 +64,9 @@ export const columns: ColumnDef<TypeTasksTable>[] = [
             );
         },
         cell: ({ row }) => {
-            const status = row.getValue('status');
-            return <div className="pl-4 font-medium">{status as string}</div>;
+            const status = row.getValue('status') as string;
+            const formatted = status.charAt(0).toUpperCase() + status.slice(1);
+            return <div className="pl-4 font-medium">{formatted}</div>;
         },
     },
     {

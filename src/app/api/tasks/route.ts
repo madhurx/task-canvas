@@ -29,10 +29,12 @@ export const POST = async (request: Request) => {
             process.env.JWT_KEY as string,
         );
 
-        const { title, content } = await request.json();
+        const { title, content, status, reminderDate } = await request.json();
         const task = new Task({
             title,
             content,
+            status,
+            reminderDate,
             userId: (tokenDetails as JwtPayload)._id,
         });
         const savedTask = await task.save();

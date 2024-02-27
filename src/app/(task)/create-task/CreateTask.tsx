@@ -32,20 +32,19 @@ const CreateTask = () => {
         title: string;
         content: string;
         status: string;
-        reminderDate: string;
+        reminderDate: Date;
         userId: string;
     }>({
         title: '',
         content: '',
         status: '',
-        reminderDate: new Date(
-            new Date().setDate(new Date().getDate() + 7),
-        ).toLocaleString(),
+        reminderDate: new Date(new Date().setDate(new Date().getDate() + 7)),
         userId: '65c082e3701038cd558f0406',
     });
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(task);
 
         try {
             const result = await addTask(task);
@@ -67,7 +66,7 @@ const CreateTask = () => {
             status: '',
             reminderDate: new Date(
                 new Date().setDate(new Date().getDate() + 7),
-            ).toLocaleString(),
+            ),
             userId: '65c082e3701038cd558f0406',
         });
     };
@@ -148,7 +147,7 @@ const CreateTask = () => {
                             >
                                 <CalendarIcon className="mr-2 h-4 w-4" />
                                 {task.reminderDate ? (
-                                    format(task.reminderDate, 'PPP HH:mm:ss')
+                                    format(task.reminderDate, 'PPP HH:mm')
                                 ) : (
                                     <span>Pick a date</span>
                                 )}
@@ -173,8 +172,7 @@ const CreateTask = () => {
                                         if (date) {
                                             setTask({
                                                 ...task,
-                                                reminderDate:
-                                                    date.toLocaleString(),
+                                                reminderDate: date,
                                             });
                                         }
                                     }}
