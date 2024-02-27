@@ -37,8 +37,14 @@ const AllTasks = () => {
     }, [context.user]);
 
     return (
-        <div className="container mx-auto py-10">
-            {/* {task} */}
+        <div className="container mx-auto py-4">
+            <div className="text-2xl font-bold py-2">
+                Welcome back!
+                <br />
+                <span className="text-base dark:text-neutral-400 text-neutral-600 py-px">
+                    Here is a list of all your tasks!
+                </span>
+            </div>
             <DataTable columns={columns} data={task} />
         </div>
     );

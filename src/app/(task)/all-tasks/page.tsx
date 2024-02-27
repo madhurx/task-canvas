@@ -1,3 +1,4 @@
+import MaxWidthWrapper from '@/components/MaxWidthWrapper';
 import AllTasks from './AllTasks';
 
 export const metadata = {
@@ -5,9 +6,9 @@ export const metadata = {
 };
 const page = () => {
     return (
-        <div>
+        <MaxWidthWrapper>
             <AllTasks />
-        </div>
+        </MaxWidthWrapper>
     );
 };
 

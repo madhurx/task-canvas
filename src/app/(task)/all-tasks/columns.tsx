@@ -46,7 +46,7 @@ export const columns: ColumnDef<TypeTasksTable>[] = [
     },
     {
         accessorKey: 'content',
-        header: 'Task Description',
+        header: () => <div className="text-left">Task Description</div>,
     },
     {
         accessorKey: 'status',
@@ -83,12 +83,11 @@ export const columns: ColumnDef<TypeTasksTable>[] = [
                 </Button>
             );
         },
-
         cell: ({ row }) => {
             const date = row.getValue('createdAt');
             const formatted = moment(date as Date)
                 .utc()
-                .format('DD/MM/YY');
+                .format('MMM DD, YYYY');
             return <div className="pl-4 font-medium">{formatted}</div>;
         },
     },

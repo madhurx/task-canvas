@@ -6,6 +6,7 @@ export interface TypeTask extends Document {
     title: string;
     content: string;
     status: string;
+    reminderDate: Date;
     userId: mongoose.Types.ObjectId;
     createdAt: Date;
     updatedAt: Date;
@@ -28,6 +29,10 @@ const taskSchema = new Schema<TypeTask>(
             enum: statusEnum,
             required: true,
             default: statusEnum[0],
+        },
+        reminderDate: {
+            type: Date,
+            required: true,
         },
         userId: {
             type: mongoose.Schema.Types.ObjectId,
