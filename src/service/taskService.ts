@@ -43,3 +43,14 @@ export async function deleteUserTask(taskId: string) {
         return { success: false, message: error.response.data.message };
     }
 }
+
+export async function exportSpreadSheet() {
+    try {
+        const result = await httpAxios
+            .get('/api/tasks/export/spreadsheet')
+            .then((response) => response.data);
+        return result;
+    } catch (error: any) {
+        return { success: false, message: error.response.data.message };
+    }
+}

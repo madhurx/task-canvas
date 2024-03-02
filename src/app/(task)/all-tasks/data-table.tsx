@@ -28,8 +28,12 @@ import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
+    DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { FileSpreadsheetIcon, FileTextIcon } from 'lucide-react';
+import { exportSpreadSheet } from '@/service/taskService';
+import { toast } from 'react-toastify';
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -67,6 +71,27 @@ export function DataTable<TData, TValue>({
         },
     });
 
+    const handleExportSpreadSheet = async () => {
+        try {
+            const result = await exportSpreadSheet();
+            console.log(result);
+            const filePath = result.data.filePath;
+            const link = document.createElement('a');
+            link.href = filePath;
+            link.setAttribute('download', 'tasks.xlsx');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            if (result.success === false) {
+                toast.error(result.message);
+                return;
+            }
+            toast.success(result.message);
+        } catch (error) {
+            toast.error('Something went wrong!');
+        }
+    };
+
     return (
         <div>
             <div className="flex items-center py-4">
@@ -84,6 +109,7 @@ export function DataTable<TData, TValue>({
                     }
                     className="max-w-sm"
                 />
+                {/* columns Dropdown */}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" className="ml-auto">
@@ -108,6 +134,25 @@ export function DataTable<TData, TValue>({
                                     </DropdownMenuCheckboxItem>
                                 );
                             })}
+                    </DropdownMenuContent>
+                </DropdownMenu>
+
+                {/* download Dropdown */}
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="ml-2">
+                            Export
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuItem onClick={handleExportSpreadSheet}>
+                            <FileSpreadsheetIcon className="mr-2 h-4 w-4" />
+                            <span>Excel</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                            <FileTextIcon className="mr-2 h-4 w-4" />
+                            <span>Pdf</span>
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </div>

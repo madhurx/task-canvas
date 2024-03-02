@@ -8,10 +8,11 @@ import * as XLSX from 'xlsx';
 import * as fs from 'fs';
 import path from 'path';
 import { format } from 'date-fns';
+import { NextApiRequest } from 'next';
 
 connectDB();
 
-export const GET = async (req: Request, res: Response) => {
+export const GET = async (req: NextApiRequest, res: Response) => {
     try {
         const authToken = cookies().get('authToken')?.value;
         const tokenDetails: string | JwtPayload = jwt.verify(
@@ -45,6 +46,7 @@ export const GET = async (req: Request, res: Response) => {
         const currentDate = new Date();
         const formattedDate = format(currentDate, 'yyyyMMddHHmmss');
         const filename = `${userEmail}-${formattedDate}-tasks.xlsx`;
+
         const filePath = path.join(directoryPath, filename);
 
         const dataWithHeaders = [headers, ...taskData];
@@ -54,19 +56,26 @@ export const GET = async (req: Request, res: Response) => {
         XLSX.utils.book_append_sheet(workbook, worksheet, 'Tasks');
         XLSX.writeFile(workbook, filePath);
 
-        console.log('Excel file created successfully.');
+        const protocol =
+            req.headers['x-forwarded-proto'] ||
+            req.headers['referer']?.split(':')[0] ||
+            'http';
+        const host = process.env.NEXT_PUBLIC_HOST || 'localhost:3000';
+        const downloadedFilePath =
+            protocol + '://' + host + '/export/spreadSheet/' + filename;
+        console.log(downloadedFilePath);
 
         return NextResponse.json(
             {
                 success: true,
-                message: 'Tasks fetched successfully',
-                data: { filePath },
+                message: 'File downloaded successfully',
+                data: { filePath: downloadedFilePath },
             },
             {
                 status: 200,
             },
         );
     } catch (error: any) {
-        return getErrorResponseMessage(false, 'Tasks not fetched!', 500, error);
+        return getErrorResponseMessage(false, 'Unable to download', 500, error);
     }
 };
