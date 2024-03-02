@@ -7,19 +7,19 @@ import { NextResponse } from 'next/server';
 
 connectDB();
 
-export const GET = async () => {
-    try {
-        const tasks = await Task.find();
+// export const GET = async () => {
+//     try {
+//         const tasks = await Task.find();
 
-        return NextResponse.json({
-            success: true,
-            message: 'Tasks fetched successfully',
-            data: tasks,
-        });
-    } catch (error: any) {
-        return getErrorResponseMessage(false, 'Tasks not fetched!', 500, error);
-    }
-};
+//         return NextResponse.json({
+//             success: true,
+//             message: 'Tasks fetched successfully',
+//             data: tasks,
+//         });
+//     } catch (error: any) {
+//         return getErrorResponseMessage(false, 'Tasks not fetched!', 500, error);
+//     }
+// };
 
 export const POST = async (request: Request) => {
     try {
