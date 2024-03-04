@@ -715,10 +715,24 @@
   resolved "https://registry.npmjs.org/@types/node/-/node-16.18.86.tgz"
   integrity sha512-QMvdZf+ZTSiv7gspwhqbfB7Y5DmbYgCsUnakS8Ul9uRbJQehDKaM7SL+GbcDS003Lh7VK4YlelHsRm9HCv26eA==
 
+"@types/nodemailer@^6.4.14":
+  version "6.4.14"
+  resolved "https://registry.yarnpkg.com/@types/nodemailer/-/nodemailer-6.4.14.tgz#5c81a5e856db7f8ede80013e6dbad7c5fb2283e2"
+  integrity sha512-fUWthHO9k9DSdPCSPRqcu6TWhYyxTBg382vlNIttSe9M7XfsT06y0f24KHXtbnijPGGRIcVvdKHTNikOI6qiHA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/prop-types@*":
   version "15.7.11"
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.11.tgz"
   integrity sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==
+
+"@types/puppeteer@^7.0.4":
+  version "7.0.4"
+  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-7.0.4.tgz#6eb4081323e9075c1f4c353f93ee2ed6eed99487"
+  integrity sha512-ja78vquZc8y+GM2al07GZqWDKQskQXygCDiu0e3uO0DMRKqE0MjrFBFmTulfPYzLB6WnL7Kl2tFPy0WXSpPomg==
+  dependencies:
+    puppeteer "*"
 
 "@types/react-dom@^18":
   version "18.2.18"
@@ -2935,6 +2949,11 @@ node-releases@^2.0.14:
   resolved "https://registry.npmjs.org/node-releases/-/node-releases-2.0.14.tgz"
   integrity sha512-y10wOWt8yZpqXmOgRo77WaHEmhYQYGNA6y421PKsKYWEK8aW+cqAphborZDhqfyKrbZEN92CN1X2KbafY2s7Yw==
 
+nodemailer@^6.9.11:
+  version "6.9.11"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.9.11.tgz#900703bd6dc62855d9cea962acf261926841f825"
+  integrity sha512-UiAkgiERuG94kl/3bKfE8o10epvDnl0vokNEtZDPTq9BWzIl6EFT9336SbIT4oaTBD8NmmUTLsQyXHV82eXSWg==
+
 normalize-path@^3.0.0, normalize-path@~3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/normalize-path/-/normalize-path-3.0.0.tgz"
@@ -3280,7 +3299,7 @@ puppeteer-core@22.3.0:
     devtools-protocol "0.0.1249869"
     ws "8.16.0"
 
-puppeteer@^22.3.0:
+puppeteer@*, puppeteer@^22.3.0:
   version "22.3.0"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-22.3.0.tgz#4ea1f1c8c5a527b0e4ca21a242af7d3d9b89e294"
   integrity sha512-GC+tyjzYKjaNjhlDAuqRgDM+IOsqOG75Da4L28G4eULNLLxKDt+79x2OOSQ47HheJBgGq7ATSExNE6gayxP6cg==

@@ -55,10 +55,10 @@ export async function exportSpreadSheet() {
     }
 }
 
-export async function exportPdf() {
+export async function exportPdf({ exportType }: { exportType: string }) {
     try {
         const result = await httpAxios
-            .get('/api/tasks/export/pdf')
+            .post('/api/tasks/export/pdf', { exportType })
             .then((response) => response.data);
         return result;
     } catch (error: any) {

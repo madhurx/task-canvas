@@ -2,17 +2,18 @@ import { connectDB } from '@/helper/db';
 import { getErrorResponseMessage } from '@/helper/errorResponseMessage';
 import { Task } from '@/models/task';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { NextApiRequest, NextApiResponse } from 'next';
 import { cookies } from 'next/headers';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import puppeteer from 'puppeteer';
 import * as fs from 'fs';
 import path from 'path';
+import nodemailer from 'nodemailer';
 
 connectDB();
 
-export const GET = async (req: NextApiRequest, res: Response) => {
+export const POST = async (req: Request, res: Response) => {
     try {
+        const { exportType } = await req.json();
         const authToken = cookies().get('authToken')?.value;
         const tokenDetails: string | JwtPayload = jwt.verify(
             authToken as string,
@@ -45,33 +46,74 @@ export const GET = async (req: NextApiRequest, res: Response) => {
         const pdfBuffer = await page.pdf({ format: 'A4' });
         await browser.close();
 
-        // res.end(pdfBuffer);
         const filename = `${userEmail}-tasks.pdf`;
-        const directoryPath = './public/export/pdf/';
-        if (!fs.existsSync(directoryPath)) {
-            fs.mkdirSync(directoryPath, { recursive: true });
+
+        if (exportType === 'pdf') {
+            const directoryPath = './public/export/pdf/';
+            if (!fs.existsSync(directoryPath)) {
+                fs.mkdirSync(directoryPath, { recursive: true });
+            }
+            const filePath = path.join(directoryPath, filename);
+            await fs.promises.writeFile(filePath, pdfBuffer, 'binary');
+            const protocol =
+                req.headers.get('x-forwarded-proto') ||
+                req.headers.get('referer')?.split(':')[0] ||
+                'http';
+            const host = process.env.NEXT_PUBLIC_HOST || 'localhost:3000';
+            const downloadedFilePath =
+                protocol + '://' + host + '/export/pdf/' + filename;
+
+            return NextResponse.json(
+                {
+                    success: true,
+                    message: 'File downloaded successfully',
+                    data: { filePath: downloadedFilePath },
+                },
+                {
+                    status: 200,
+                },
+            );
+        } else if (exportType === 'email') {
+            let transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.GMAIL_USERNAME,
+                    pass: process.env.GMAIL_PASS,
+                },
+            });
+
+            const mailOptions = {
+                from: process.env.GMAIL_USERNAME,
+                to: userEmail,
+                subject: 'Your Tasks PDF',
+                text: 'Please find attached your tasks PDF.',
+                attachments: [{ filename: filename, content: pdfBuffer }],
+            };
+
+            await transporter.sendMail(mailOptions);
+
+            return NextResponse.json(
+                {
+                    success: true,
+                    message: 'File mailed successfully',
+                    data: { filePath: null },
+                },
+                {
+                    status: 200,
+                },
+            );
+        } else {
+            return NextResponse.json(
+                {
+                    success: true,
+                    message: 'file not found',
+                    data: { filePath: null },
+                },
+                {
+                    status: 200,
+                },
+            );
         }
-        const filePath = path.join(directoryPath, filename);
-        await fs.promises.writeFile(filePath, pdfBuffer, 'binary');
-
-        const protocol =
-            req.headers['x-forwarded-proto'] ||
-            req.headers['referer']?.split(':')[0] ||
-            'http';
-        const host = process.env.NEXT_PUBLIC_HOST || 'localhost:3000';
-        const downloadedFilePath =
-            protocol + '://' + host + '/export/pdf/' + filename;
-
-        return NextResponse.json(
-            {
-                success: true,
-                message: 'File downloaded successfully',
-                data: { filePath: downloadedFilePath },
-            },
-            {
-                status: 200,
-            },
-        );
     } catch (error: any) {
         return getErrorResponseMessage(false, 'Unable to download', 500, error);
     }

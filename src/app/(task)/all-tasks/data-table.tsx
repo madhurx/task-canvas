@@ -31,7 +31,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { FileSpreadsheetIcon, FileTextIcon } from 'lucide-react';
+import { FileSpreadsheetIcon, FileTextIcon, MailIcon } from 'lucide-react';
 import { exportPdf, exportSpreadSheet } from '@/service/taskService';
 import { toast } from 'react-toastify';
 
@@ -94,7 +94,7 @@ export function DataTable<TData, TValue>({
 
     const handleExportPdf = async () => {
         try {
-            const result = await exportPdf();
+            const result = await exportPdf({ exportType: 'pdf' });
             console.log(result);
             const filePath = result.data.filePath;
             const link = document.createElement('a');
@@ -103,6 +103,20 @@ export function DataTable<TData, TValue>({
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            if (result.success === false) {
+                toast.error(result.message);
+                return;
+            }
+            toast.success(result.message);
+        } catch (error) {
+            toast.error('Something went wrong!');
+        }
+    };
+
+    const handleExportMail = async () => {
+        try {
+            const result = await exportPdf({ exportType: 'email' });
+            console.log(result);
             if (result.success === false) {
                 toast.error(result.message);
                 return;
@@ -173,6 +187,10 @@ export function DataTable<TData, TValue>({
                         <DropdownMenuItem onClick={handleExportPdf}>
                             <FileTextIcon className="mr-2 h-4 w-4" />
                             <span>Pdf</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleExportMail}>
+                            <MailIcon className="mr-2 h-4 w-4" />
+                            <span>Email</span>
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
