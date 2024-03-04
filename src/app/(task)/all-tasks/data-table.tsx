@@ -32,7 +32,7 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { FileSpreadsheetIcon, FileTextIcon } from 'lucide-react';
-import { exportSpreadSheet } from '@/service/taskService';
+import { exportPdf, exportSpreadSheet } from '@/service/taskService';
 import { toast } from 'react-toastify';
 
 interface DataTableProps<TData, TValue> {
@@ -79,6 +79,27 @@ export function DataTable<TData, TValue>({
             const link = document.createElement('a');
             link.href = filePath;
             link.setAttribute('download', 'tasks.xlsx');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            if (result.success === false) {
+                toast.error(result.message);
+                return;
+            }
+            toast.success(result.message);
+        } catch (error) {
+            toast.error('Something went wrong!');
+        }
+    };
+
+    const handleExportPdf = async () => {
+        try {
+            const result = await exportPdf();
+            console.log(result);
+            const filePath = result.data.filePath;
+            const link = document.createElement('a');
+            link.href = filePath;
+            link.setAttribute('download', 'tasks.pdf');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -149,7 +170,7 @@ export function DataTable<TData, TValue>({
                             <FileSpreadsheetIcon className="mr-2 h-4 w-4" />
                             <span>Excel</span>
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
+                        <DropdownMenuItem onClick={handleExportPdf}>
                             <FileTextIcon className="mr-2 h-4 w-4" />
                             <span>Pdf</span>
                         </DropdownMenuItem>

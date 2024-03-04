@@ -54,3 +54,14 @@ export async function exportSpreadSheet() {
         return { success: false, message: error.response.data.message };
     }
 }
+
+export async function exportPdf() {
+    try {
+        const result = await httpAxios
+            .get('/api/tasks/export/pdf')
+            .then((response) => response.data);
+        return result;
+    } catch (error: any) {
+        return { success: false, message: error.response.data.message };
+    }
+}
