@@ -1,0 +1,3 @@
+@echo off
+echo Making request to Next.js URL...
+curl http://localhost:3000/api/reminderMail
